@@ -1,12 +1,17 @@
+"""
+Encoder
+"""
 from typing import Dict
 
 
 class UniqueFieldError(Exception):
-    pass
+    """UniqueFieldError"""
 
 
 class Encoder:
-
+    """
+    Encoder
+    """
     form_dict: Dict
 
     def __init__(self, form_dict: Dict):
@@ -14,6 +19,12 @@ class Encoder:
 
     @staticmethod
     def parse_params(params: str) -> Dict:
+        """
+        :param params:
+        :type params:
+        :return:
+        :rtype:
+        """
         fields = {}
         param_list = params[1:]
         param_list = param_list.split("&")

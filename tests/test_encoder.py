@@ -36,19 +36,3 @@ class TestEncoder:
         result = Encoder.parse_params(arg)
         expected = {'email': {'name': 'email', 'value': ''}}
         assert result == expected
-
-    def test_encode(self, multipart_data):
-        form_dict = {
-            "email": {
-                "name": "email",
-                "value": "test@test.com",
-            },
-            "password": {
-                "name": "password",
-                "value": "wizard",
-            },
-        }
-        encoder = Encoder(form_dict)
-        result = encoder.encode()
-        expected = multipart_data
-        assert result == expected

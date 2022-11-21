@@ -1,8 +1,13 @@
+"""
+Birman
+"""
 from typing import Dict, List
 
 
 class Decoder:
-
+    """
+    Decoder
+    """
     data: bytes
 
     def __init__(self, data: bytes):
@@ -23,7 +28,7 @@ class Decoder:
         """
         fields = {}
         try:
-            assert type(self.data) is bytes
+            assert isinstance(self.data, bytes)
         except AssertionError:
             return {}
         _data_str = self.data.decode("utf-8")
