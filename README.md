@@ -1,8 +1,13 @@
+[![Python package](https://github.com/joegasewicz/birman/actions/workflows/python-package.yml/badge.svg)](https://github.com/joegasewicz/birman/actions/workflows/python-package.yml)
+[![Upload Python Package](https://github.com/joegasewicz/birman/actions/workflows/python-publish.yml/badge.svg)](https://github.com/joegasewicz/birman/actions/workflows/python-publish.yml)
+
 # Birman
 Multipart formdata decoder
 
 ### Install
-
+```
+pip install birman
+```
 
 ### Get started
 
