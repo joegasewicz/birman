@@ -1,6 +1,11 @@
-from birman.decoder import Decoder
-from tests.fixtures import multipart_data, multipart_data_2
+import io
 
+from birman.decoder import Decoder
+from tests.fixtures import (
+    multipart_data,
+    multipart_data_2,
+    file_type,
+)
 
 class TestDecoder:
 
@@ -47,3 +52,32 @@ class TestDecoder:
         result = decoder.decode()
         expected = {}
         assert result == expected
+
+    def test_byte_stream(self, file_type):
+        byte_stream = file_type
+        d = Decoder(byte_stream)
+        result = d.decode()
+        expected = {
+            "type": "form-data",
+            "name": "logo",
+            "filename": "bobtail.png",
+            "content_type": "image/png",
+            "byte_stream": [
+                b'\x89PNG\r',
+                b'\x1a',
+                b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
+                b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
+                b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
+            ],
+        }
+        assert result == expected
+
+    def test_file(self, file_type):
+        png = file_type.split(b"image/png")[1]
+        stream = io.BytesIO(png)
+        with open("logo.png", "wb") as f:
+            while True:
+                buf = stream.read(16384)
+                if not buf:
+                    break
+                f.write(buf)
