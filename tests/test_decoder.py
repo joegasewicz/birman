@@ -16,10 +16,12 @@ class TestDecoder:
             "email": {
                 "name": "email",
                 "value": "test@test.com",
+                "type": "text",
             },
             "password": {
                 "name": "password",
                 "value": "wizard",
+                "type": "text",
             },
         }
         assert result == expected
@@ -31,6 +33,7 @@ class TestDecoder:
             "email": {
                 "name": "email",
                 "value": "test@test.com",
+                "type": "text",
             },
         }
         assert result == expected
@@ -57,11 +60,16 @@ class TestDecoder:
         byte_stream = file_type
         d = Decoder(byte_stream)
         result = d.decode()
-        expected = {
-            "type": "form-data",
-            "name": "logo",
-            "filename": "bobtail.png",
-            "content_type": "image/png",
-            "byte_stream": file_type,
-        }
-        assert result == expected
+
+        assert result["name"]["name"] == "name"
+        assert result["name"]["value"] == "Joe"
+        assert result["name"]["type"] == "text"
+        assert result["age"]["name"] == "age"
+        assert result["age"]["value"] == "47"
+        assert result["age"]["type"] == "text"
+        assert result["logo"]["name"] == "logo"
+        assert result["logo"]["type"] == "file"
+        assert result["logo"]["value"]["filename"] == "bobtail.png"
+        assert result["logo"]["value"]["mimetype"] == "image/png"
+        assert result["logo"]["value"]["file_data"] is not None
+        assert isinstance(result["logo"]["value"]["file_data"], bytes)

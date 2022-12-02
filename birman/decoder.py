@@ -62,20 +62,29 @@ class Decoder:
             f = d.split(b"filename=")
             if len(f) > 1:
                 filename = self._get_filename(f[0])
-                value = self._get_filename_value(d, filename)
-                fields[filename] = {"filename": filename, "value": value}
+                value = self._get_filename_value(d)
+                fields[filename] = {
+                    "name": filename,
+                    "value": value,
+                    "type": "file",
+                }
             else:
                 name = self._get_name(f[0])
                 value = self._get_value(d)
-                fields[name] = {"name": name, "value": value}
+                fields[name] = {
+                    "name": name,
+                    "value": value,
+                    "type": "text",
+                }
         return fields
 
-    def _get_filename_value(self, data: bytes, field_name: str) -> Dict:
+    def _get_filename_value(self, data: bytes) -> Dict:
         fv = data.split(b"Content-Type")
         if len(fv) < 1:
             fv = data.split(b"content-type")
         filename = fv[0].split(b"filename=")
         filename = filename[1].decode("utf-8").strip()
+        filename = filename.replace('"', "")
         mimetype = fv[1].split(b"\r\n")[0]
         byte_str = fv[1].split(mimetype)[1]
         while True:
@@ -83,9 +92,11 @@ class Decoder:
                 byte_str = byte_str[2:]
             else:
                 break
+        # strip mimetype after byte_str work
+        mimetype = mimetype.split(b":")[1]
+        mimetype = mimetype.decode("utf-8").strip()
         return {
             "filename": filename,
             "mimetype": mimetype,
             "file_data": byte_str,
-            "field_name": field_name,
         }
