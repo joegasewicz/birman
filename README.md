@@ -2,7 +2,7 @@
 [![Upload Python Package](https://github.com/joegasewicz/birman/actions/workflows/python-publish.yml/badge.svg)](https://github.com/joegasewicz/birman/actions/workflows/python-publish.yml)
 
 # Birman
-Multipart formdata decoder
+Multipart formdata decoder library.
 
 ### Install
 ```
@@ -23,16 +23,16 @@ This would return a normalized dict
 ```python
 # example from params - ?email=test@test.com&password=wizard
 # result -
-# {
-#     "email": {
-#         "name": "email",
-#         "value": "test@test.com",
-#     },
-#     "password": {
-#         "name": "password",
-#         "value": "wizard",
-#     },
-# }
+{
+    "email": {
+        "name": "email",
+        "value": "test@test.com",
+    },
+    "password": {
+        "name": "password",
+        "value": "wizard",
+    },
+}
 ```
 
 Parse URI form params
@@ -45,14 +45,29 @@ result = Encoder.parse_params(arg)
 This would return a normalized dict
 ```python
 # result -
-#  {
-#     "email": {
-#         "name": "email",
-#         "value": "test@test.com",
-#     },
-#     "password": {
-#         "name": "password",
-#         "value": "wizard",
-#     },
-# }
+{
+    "email": {
+        "name": "email",
+        "value": "test@test.com",
+    },
+    "password": {
+        "name": "password",
+        "value": "wizard",
+    },
+}
+```
+
+### Multipart Formdata
+The decoder method will return file data extracted from the multipart formdata as a dict.
+
+```python
+{
+    'name': 'logo',
+    'type': 'file',
+    'value': {
+        'filename': 'bobtail.png',
+        'mimetype': 'image/png', 
+        'file_data': b'...',
+        'type': 'file',
+}
 ```

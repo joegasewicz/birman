@@ -7,7 +7,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="birman",
-    version="0.0.1",
+    version="0.0.2",
     description="Multipart formdata decoder",
     packages=["birman"],
     py_modules=["birman"],
