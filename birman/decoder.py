@@ -1,7 +1,7 @@
 """
 Birman
 """
-from typing import Dict, List, Optional
+from typing import Dict
 
 
 class Decoder:
