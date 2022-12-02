@@ -62,22 +62,6 @@ class TestDecoder:
             "name": "logo",
             "filename": "bobtail.png",
             "content_type": "image/png",
-            "byte_stream": [
-                b'\x89PNG\r',
-                b'\x1a',
-                b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
-                b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
-                b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
-            ],
+            "byte_stream": file_type,
         }
         assert result == expected
-
-    def test_file(self, file_type):
-        png = file_type.split(b"image/png")[1]
-        stream = io.BytesIO(png)
-        with open("logo.png", "wb") as f:
-            while True:
-                buf = stream.read(16384)
-                if not buf:
-                    break
-                f.write(buf)
